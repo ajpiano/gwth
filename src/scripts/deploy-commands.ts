@@ -1,9 +1,9 @@
 import { config } from 'dotenv';
 import { REST, Routes } from 'discord.js';
-import * as submitCommand from '../lib/commands/submit';
-import * as pingCommand from '../lib/commands/ping';
+import * as submitCommand from '@commands/submit';
+import * as pingCommand from '@commands/ping';
+import * as midsCommand from '@commands/mids';
 
-// Load environment variables
 config();
 
 const { DISCORD_TOKEN, DISCORD_CLIENT_ID } = process.env;
@@ -16,6 +16,7 @@ if (!DISCORD_TOKEN || !DISCORD_CLIENT_ID) {
 const commands = [
     submitCommand.data.toJSON(),
     pingCommand.data.toJSON(),
+    midsCommand.data.toJSON()
 ];
 
 const rest = new REST({ version: '10' }).setToken(DISCORD_TOKEN);
@@ -28,6 +29,8 @@ const rest = new REST({ version: '10' }).setToken(DISCORD_TOKEN);
             Routes.applicationCommands(DISCORD_CLIENT_ID),
             { body: commands },
         );
+
+        console.log(commands);
 
         console.log('Successfully reloaded application (/) commands.');
     } catch (error) {

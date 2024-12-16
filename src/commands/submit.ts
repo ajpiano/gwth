@@ -1,4 +1,5 @@
 import { SlashCommandBuilder, AttachmentBuilder } from 'discord.js';
+import type { CommandInteraction } from 'discord.js';
 
 export const data = new SlashCommandBuilder()
     .setName('submit')
@@ -10,16 +11,13 @@ export const data = new SlashCommandBuilder()
             .setRequired(true)
     );
 
-export async function execute(interaction) {
+export async function execute(interaction: CommandInteraction) {
     const photo = interaction.options.getAttachment('photo');
 
     if (!photo) {
         await interaction.reply('Please provide a photo with your submission.');
         return;
     }
-
-    // Here you would typically save the submission to a database
-    // For now, we'll just acknowledge the submission
 
     const responseMessage = `Thank you for your submission, ${interaction.user.username}!
 Your photo has been received: ${photo.url}`;
